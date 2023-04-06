@@ -1,4 +1,4 @@
-package com.example.plugins
+package dev.emanum.plugins
 
 import io.ktor.server.application.*
 
