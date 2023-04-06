@@ -1,0 +1,43 @@
+openapi: "3.0.3"
+info:
+  title: "port_crane API"
+  description: "port_crane API"
+  version: "1.0.0"
+servers:
+- url: "https://port_crane"
+paths:
+  /:
+    get:
+      description: "openAPI(path=\"openapi\", swaggerFile = \"openapi/documentation.yaml\"\
+        ) <br> swaggerUI(path = \"swagger\", swaggerFile = \"openapi/documentation.yaml\"\
+        )"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Hello World!"
+  /namespace:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+  /pod:
+    get:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"

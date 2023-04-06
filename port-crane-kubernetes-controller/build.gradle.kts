@@ -30,12 +30,16 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
+//    implementation("io.ktor:ktor-server-openapi:$ktor_version")
+//    implementation("io.ktor:ktor-server-swagger:$ktor_version")
+//    implementation("org.yaml:snakeyaml:1.33")
 
 
     implementation("io.kubernetes:client-java-api:$kubernetes_version")
     implementation("io.kubernetes:client-java:$kubernetes_version")
     implementation("io.kubernetes:client-java-extended:$kubernetes_version")
     implementation("io.kubernetes:client-java-proto:$kubernetes_version")
+    implementation("io.ktor:ktor-server-cors-jvm:2.2.4")
 
 
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
