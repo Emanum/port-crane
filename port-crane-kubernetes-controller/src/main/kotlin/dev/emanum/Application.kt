@@ -1,15 +1,18 @@
 package dev.emanum
 
+import com.fasterxml.jackson.core.util.DefaultIndenter
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import dev.emanum.plugins.configureRouting
 import dev.emanum.plugins.configureSecurity
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
-import kotlinx.serialization.json.Json
 
 private const val port = 8080
 
@@ -23,10 +26,14 @@ fun Application.module() {
     configureSecurity()
     configureRouting()
     install(ContentNegotiation) {
-        json(Json {
-            prettyPrint = true
-            isLenient = true
-        })
+        jackson {
+            configure(SerializationFeature.INDENT_OUTPUT, true)
+            setDefaultPrettyPrinter(DefaultPrettyPrinter().apply {
+                indentArraysWith(DefaultPrettyPrinter.FixedSpaceIndenter.instance)
+                indentObjectsWith(DefaultIndenter("  ", "\n"))
+            })
+            registerModule(JavaTimeModule())  // support java.time.* types
+        }
     }
 
     install(CORS) {
