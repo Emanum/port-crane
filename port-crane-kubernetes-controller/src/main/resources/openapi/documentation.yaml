@@ -51,10 +51,72 @@ paths:
               examples:
                 Example#1:
                   value: "Missing or malformed name"
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+        "500":
+          description: "Internal Server Error"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
   /pod:
     get:
       description: ""
       responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+  /service:
+    post:
+      description: ""
+      parameters:
+      - name: "namespace"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Missing or malformed namespace"
+  /service/{namespace}:
+    get:
+      description: "SERVICES"
+      parameters:
+      - name: "namespace"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "400":
+          description: "Bad Request"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "Missing or malformed namespace"
         "200":
           description: "OK"
           content:
