@@ -2,6 +2,7 @@ package dev.emanum.plugins
 
 import dev.emanum.Namespace
 import io.fabric8.kubernetes.api.model.Service
+import io.fabric8.kubernetes.api.model.apps.Deployment
 import io.fabric8.kubernetes.client.KubernetesClientBuilder
 import io.fabric8.kubernetes.client.utils.Serialization
 import io.ktor.http.*
@@ -88,6 +89,21 @@ fun Application.configureRouting() {
             )
             val response = client.services().inNamespace(namespace)
                 .resource(service)
+                .serverSideApply()
+            call.respondText { response.status.toString() }
+        }
+
+        post("deploy") {
+            val namespace = "default"
+            val yamlString = Files.readString(Path.of(ClassLoader.getSystemResource("deployments/nginxDeployment.yaml").toURI()))
+
+            val client = KubernetesClientBuilder().build()
+            val deployment = Serialization.unmarshal(
+                yamlString,
+                Deployment::class.java
+            )
+            val response = client.apps().deployments().inNamespace(namespace)
+                .resource(deployment)
                 .serverSideApply()
             call.respondText { response.status.toString() }
         }

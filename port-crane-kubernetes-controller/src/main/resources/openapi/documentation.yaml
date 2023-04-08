@@ -4,8 +4,7 @@ info:
   description: "port_crane API"
   version: "1.0.0"
 servers:
-- url: "https://port_crane"
-- url: "http://localhost:8080"
+- url: "https://localhost:8080"
 paths:
   /:
     get:
@@ -20,6 +19,16 @@ paths:
               examples:
                 Example#1:
                   value: "Hello World!"
+  /deploy:
+    post:
+      description: ""
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
   /namespace:
     get:
       description: ""
@@ -82,22 +91,13 @@ paths:
   /service:
     post:
       description: ""
-      parameters:
-      - name: "namespace"
-        in: "query"
-        required: false
-        schema:
-          type: "string"
       responses:
-        "400":
-          description: "Bad Request"
+        "200":
+          description: "OK"
           content:
             text/plain:
               schema:
                 type: "string"
-              examples:
-                Example#1:
-                  value: "Missing or malformed namespace"
   /service/{namespace}:
     get:
       description: "SERVICES"
