@@ -57,6 +57,7 @@ microk8s status --wait-ready
 
 microk8s enable dashboard
 microk8s enable ingress
+microk8s enable dns
 microk8s enable cert-manager
 
 microk8s status --wait-ready
@@ -70,3 +71,35 @@ sudo apt-get install docker.io
 sudo usermod -aG docker ${USER}
 su - ${USER}
 ```
+
+
+## Configure letsencrypt
+https://microk8s.io/docs/addon-cert-manager
+
+```bash
+microk8s kubectl apply -f - <<EOF
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+ name: lets-encrypt
+spec:
+ acme:
+   email: microk8s@example.com
+   server: https://acme-v02.api.letsencrypt.org/directory
+   privateKeySecretRef:
+     # Secret resource that will be used to store the account's private key.
+     name: lets-encrypt-private-key
+   # Add a single challenge solver, HTTP01 using nginx
+   solvers:
+   - http01:
+       ingress:
+         class: public
+EOF
+```
+
+Verify that the ClusterIssuer was created successfully with `microk8s kubectl get clusterissuer -o wide`
+
+Next you can create a Deployment (contains actual pod definition) and a Service (makes the deployment accessible without using the ip directly).
+Afterward, you can create an ingress rule to make the service accessible from the outside. See exampleKubeFiles/coder/*.yml for an example.
+
