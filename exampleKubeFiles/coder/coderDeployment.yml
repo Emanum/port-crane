@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coder
+  namespace: default
+  labels:
+    run: my-coder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: my-coder
+  template:
+    metadata:
+      labels:
+        run: my-coder
+    spec:
+      containers:
+        - name: my-coder
+          image: codercom/code-server:latest
+          env:
+            - name: PASSWORD
+              value: ""
+          ports:
+            - containerPort: 8080
