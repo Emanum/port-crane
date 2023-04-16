@@ -1,5 +1,7 @@
 # Port Crane
 
+![Port-crane banner](port-crane3.png)
+
 Port Crane is a simple tool for providing a conainerized application to users. For now it is designed to be used with [Docker](https://www.docker.com/) and [Kubernetes](https://kubernetes.io/).
 
 There is a Dashboard where users can see the available applications and start/delete an instance of an application. 
